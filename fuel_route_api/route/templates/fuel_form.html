@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Route Form</title>
+    <script>
+        document.getElementById('fuelRouteForm').addEventListener('submit', submitForm);
+
+        async function submitForm(event) {
+            event.preventDefault();
+
+            const originLat = parseFloat(document.getElementById('originLat').value);
+            const originLng = parseFloat(document.getElementById('originLng').value);
+            const destinationLat = parseFloat(document.getElementById('destinationLat').value);
+            const destinationLng = parseFloat(document.getElementById('destinationLng').value);
+
+            const payload = {
+                origin: {
+                    location: {
+                        latLng: {
+                            latitude: originLat,
+                            longitude: originLng
+                        }
+                    }
+                },
+                destination: {
+                    location: {
+                        latLng: {
+                            latitude: destinationLat,
+                            longitude: destinationLng
+                        }
+                    }
+                }
+            };
+
+            try {
+                const response = await fetch('/api/fuel-route/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    console.log('Route Result:', result.route);
+                    // Handle displaying route data or plotting on a map here
+                } else {
+                    console.error('Error:', result.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <h1>Fuel Route Calculator</h1>
+    <form id="fuelRouteForm">
+        <label for="originLat">Origin Latitude:</label>
+        <input type="text" id="originLat" required>
+        <label for="originLng">Origin Longitude:</label>
+        <input type="text" id="originLng" required>
+        <label for="destinationLat">Destination Latitude:</label>
+        <input type="text" id="destinationLat" required>
+        <label for="destinationLng">Destination Longitude:</label>
+        <input type="text" id="destinationLng" required>
+        <button type="submit">Submit</button>
+    </form>
+    
+</body>
+</html>
