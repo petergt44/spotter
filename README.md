@@ -70,6 +70,12 @@ Additional utility applications and services.
 
 ## Quick Start
 
+1. Clone the repository:
+```bash
+git clone https://github.com/petergt44/spotter.git
+cd spotter
+```
+
 ### ELD App
 
 ```bash
@@ -93,10 +99,10 @@ npm start
 ```bash
 cd fuel_route_api
 python -m venv venv
-source venv/bin/activate
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 python manage.py migrate
-python manage.py load_fuel_data
+python manage.py load_fuel_data  # Load fuel price data from CSV
 python manage.py runserver
 ```
 
@@ -122,6 +128,7 @@ spotter/
 │   ├── route/               # Django app
 │   ├── fuel_route_api/      # Django project settings
 │   ├── manage.py
+│   ├── requirements.txt
 │   └── files/               # Data files
 ├── google-flights-clone/     # Flight search app
 │   └── flights-react-app/   # React application
